@@ -1,4 +1,3 @@
-  
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,7 +10,12 @@ public class Hello2DApp {
 }
 
 class Hello2DFrame extends JFrame {
-    public Hello2DFrame () {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    public Hello2DFrame() {
         this.addWindowListener (
             new WindowAdapter() {
                 public void windowClosing (WindowEvent e) {
@@ -29,7 +33,16 @@ class Hello2DFrame extends JFrame {
         g2d.setPaint(Color.blue);
         int w = getWidth();
         int h = getHeight();
-        g2d.drawLine(0,0, w,h);
-        g2d.drawLine(0,h, w,0);
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 0, w, h);
+        g2d.setColor(Color.cyan);
+        g2d.drawPolygon(new int[] {w/2, 50, 50}, new int [] {h/2, 50, 100}, 3);
+        g2d.drawPolygon(new int[] {w/2, 50, 100}, new int [] {h/2, 50, 50}, 3);
+        g2d.drawPolygon(new int[] {w/2, h-50, w-100}, new int [] {h/2, h-50, w-50}, 3);
+        g2d.drawPolygon(new int[] {w/2, h-50, w-50}, new int [] {h/2, h-50, w-100}, 3);
+        g2d.drawPolygon(new int[] {w/2, 50, 100}, new int [] {h/2, h-50, h-50}, 3);
+        g2d.drawPolygon(new int[] {w/2, 50, 50}, new int [] {h/2, h-50, w-100}, 3);
+        g2d.drawPolygon(new int[] {w/2, w-50, w-100}, new int [] {h/2, 50, 50}, 3);
+        g2d.drawPolygon(new int[] {w/2, w-50, w-50}, new int [] {h/2, 50, 100}, 3);
     }
 }
