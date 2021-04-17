@@ -18,6 +18,10 @@ class ListFrame extends JFrame {
     ArrayList<Figure> figs = new ArrayList<Figure>();
     Random rand = new Random();
     Figure focus;
+    int mouseX;
+    int mouseY;
+    int mX;
+    int mY;
 
     ListFrame () {
         this.addWindowListener (
@@ -30,10 +34,10 @@ class ListFrame extends JFrame {
         this.addKeyListener (
             new KeyAdapter() {
                 public void keyPressed (KeyEvent evt) {
-                    int x = rand.nextInt(350);
-                        int y = rand.nextInt(350);
-                        int w = rand.nextInt(50);
-                        int h = rand.nextInt(50);
+                        int x = mX;
+                        int y = mY;
+                        int w = rand.nextInt(150);
+                        int h = rand.nextInt(150);
                         int r = rand.nextInt(255);
                         int g = rand.nextInt(255);
                         int b = rand.nextInt(255);
@@ -56,15 +60,16 @@ class ListFrame extends JFrame {
         {
             public void mouseClicked(MouseEvent evt)
             {
-                Point cord = new Point(getMousePosition());
-                int mouseX = cord.x;
-                int mouseY = cord.y;
+                mouseX = evt.getX();
+                mouseY = evt.getY();
                 focus = null;
                 for (Figure fig: figs)
                 {
                     if ((mouseX >= fig.x && mouseX <= (fig.w+fig.x)) && (mouseY >= fig.y && mouseY <= (fig.y+fig.h)))
                     {
                         focus = fig;
+                        figs.remove(fig);
+                        figs.add(fig);
                         repaint();
                         break;
                     }
@@ -77,9 +82,23 @@ class ListFrame extends JFrame {
             }
         }
     );
+
+
+    this.addMouseMotionListener(
+        new MouseMotionAdapter()
+        {    
+            public void mouseMoved(MouseEvent e)
+            {
+                mX = e.getX();
+                mY = e.getY();
+            }
+        }
+    );
+
         this.setTitle("Lista de Rects e Ellipses");
-        this.setSize(350, 350);
+        this.setSize(720, 480);
         this.getContentPane().setBackground(Color.BLACK);
+        this.setLocationRelativeTo(null);  
         }
     public void paint (Graphics g) {
         super.paint(g);
@@ -90,6 +109,17 @@ class ListFrame extends JFrame {
         if (focus!=null){
             g2d.setColor(Color.RED);
             g2d.drawRect(focus.x-1, focus.y-1, focus.w+2, focus.h+2);
+            this.addKeyListener (
+                new KeyAdapter() {
+                    public void keyPressed (KeyEvent evt) {
+                        if (evt.getKeyChar() == KeyEvent.VK_DELETE) {
+                            figs.remove(focus);
+                            focus=null;
+                            repaint();
+                        }
+                    }
+                }
+            );
         }
         focus.paint(g);
     }
