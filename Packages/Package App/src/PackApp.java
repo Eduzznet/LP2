@@ -1,29 +1,29 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 import figures.*;
 
-class PackApp {
+class ListApp {
     public static void main (String[] args) {
-        PackFrame frame = new PackFrame();
+        ListFrame frame = new ListFrame();
         frame.setVisible(true);
     }
 }
 
-class PackFrame extends JFrame {
+class ListFrame extends JFrame {
     private static final long serialVersionUID = 1L;
-    Rect r1;
-    Rect r2;
-    Rect r3;
-    Rect r4;
-    Ellipse e1;
-    Ellipse e2;
-    Ellipse e3;
-    Ellipse e4;
-    Texto t1;
+    ArrayList<Figure> figs = new ArrayList<Figure>();
+    Random rand = new Random();
+    Figure focus;
+    int mouseX;
+    int mouseY;
+    int mX;
+    int mY;
 
-    PackFrame () {
+    ListFrame () {
         this.addWindowListener (
             new WindowAdapter() {
                 public void windowClosing (WindowEvent e) {
@@ -31,29 +31,96 @@ class PackFrame extends JFrame {
                 }
             }
         );
-        this.setTitle("Java Packages");
-        this.setSize(350, 350);
-        this.r1 = new Rect(50,50, 100,30, 0, 0 ,0, 50, 200, 70);
-        this.r2 = new Rect(150,50, 30,100, 100, 100 ,100, 200, 200, 30);
-        this.r3 = new Rect(50,80, 100,30, 200, 30 ,70, 20, 50, 150);
-        this.r4 = new Rect(50,110, 100,40, 30, 150 ,20, 200, 50, 20);
-        this.e1 = new Ellipse(50,200, 100, 100, 0, 0, 0, 200, 10, 60);
-        this.e2 = new Ellipse(200,200, 100, 100, 10, 30, 200, 200, 10, 60);
-        this.e3 = new Ellipse(220,250, 35, 35, 100, 100, 100, 0, 0, 0);
-        this.e4 = new Ellipse(100,250, 35, 35, 0, 115, 0, 100, 100, 0);
-        this.t1 = new Texto ("By: Eduardo Franco", "Segoe Script", 1, 10, 330, 20, 100, 0, 0);
-    }
+        this.addKeyListener (
+            new KeyAdapter() {
+                public void keyPressed (KeyEvent evt) {
+                        int x = mX;
+                        int y = mY;
+                        int w = rand.nextInt(150);
+                        int h = rand.nextInt(150);
+                        int r = rand.nextInt(255);
+                        int g = rand.nextInt(255);
+                        int b = rand.nextInt(255);
+                        int rf = rand.nextInt(255);
+                        int gf = rand.nextInt(255);
+                        int bf = rand.nextInt(255);
+                    if (evt.getKeyChar() == 'r') {
+                        figs.add(new Rect(x,y, w,h, r,g,b, rf,gf,bf));
+                        repaint();
+                    }
+                    if (evt.getKeyChar() == 'e') {
+                        figs.add(new Ellipse(x,y, w,h, r,g,b, rf,gf,bf));
+                        repaint();
+                    }
+                }
+            }
+        );
+    this.addMouseListener (
+        new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent evt)
+            {
+                mouseX = evt.getX();
+                mouseY = evt.getY();
+                focus = null;
+                for (Figure fig: figs)
+                {
+                    if ((mouseX >= fig.x && mouseX <= (fig.w+fig.x)) && (mouseY >= fig.y && mouseY <= (fig.y+fig.h)))
+                    {
+                        focus = fig;
+                        figs.remove(fig);
+                        figs.add(fig);
+                        repaint();
+                        break;
+                    }
+                    else
+                    {
+                        focus = null;
+                        repaint();
+                    }
+                }
+            }
+        }
+    );
 
+
+    this.addMouseMotionListener(
+        new MouseMotionAdapter()
+        {    
+            public void mouseMoved(MouseEvent e)
+            {
+                mX = e.getX();
+                mY = e.getY();
+            }
+        }
+    );
+
+        this.setTitle("Lista de Rects e Ellipses");
+        this.setSize(720, 480);
+        this.getContentPane().setBackground(Color.BLACK);
+        this.setLocationRelativeTo(null);  
+        }
     public void paint (Graphics g) {
         super.paint(g);
-        this.r1.paint(g);
-        this.r2.paint(g);
-        this.r3.paint(g);
-        this.r4.paint(g);
-        this.e1.paint(g);
-        this.e2.paint(g);
-        this.e3.paint(g);
-        this.e4.paint(g);
-        this.t1.paint(g);
+        Graphics2D g2d = (Graphics2D) g;
+        for (Figure fig: this.figs) {
+            fig.paint(g);
+        }
+        if (focus!=null){
+            g2d.setColor(Color.RED);
+            g2d.drawRect(focus.x-1, focus.y-1, focus.w+2, focus.h+2);
+            this.addKeyListener (
+                new KeyAdapter() {
+                    public void keyPressed (KeyEvent evt) {
+                        if (evt.getKeyChar() == KeyEvent.VK_DELETE) {
+                            figs.remove(focus);
+                            focus=null;
+                            repaint();
+                        }
+                    }
+                }
+            );
+        }
+        focus.paint(g);
     }
 }
