@@ -2,6 +2,7 @@ package figures;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.event.*;
 
 public class Ellipse extends Figure {
     int rf, gf, bf;
@@ -19,12 +20,101 @@ public class Ellipse extends Figure {
         this.bf = bf;
     }
 
-    public int getIntH() {
-        return h;
-    }
-
-    public int getIntW() {
-        return w;
+    public void keyPressed(KeyEvent evt){
+        switch (evt.getKeyCode()){
+            case KeyEvent.VK_UP:{
+                this.h+=5;
+                break;
+            }
+            case KeyEvent.VK_DOWN:{
+                if(this.h>=1){
+                    this.h-=3;
+                }
+                break;
+            }
+            case KeyEvent.VK_RIGHT:{
+                this.w+=5;
+                break;
+            }
+            case KeyEvent.VK_LEFT:{
+                if (this.w>=1){
+                    this.w-=3;
+                }
+                break;
+            }
+            case KeyEvent.VK_1:{ //Vermelho
+                this.rf = 255;
+                this.gf = 0;
+                this.bf = 0;
+                break;
+            }
+            case KeyEvent.VK_2:{ //Verde
+                this.rf = 0;
+                this.gf = 255;
+                this.bf = 0;
+                break;
+            }
+            case KeyEvent.VK_3:{ //Azul
+                this.rf = 0;
+                this.gf = 0;
+                this.bf = 255;
+                break;
+            }
+            case KeyEvent.VK_4:{ //Amarelo
+                this.rf = 255;
+                this.gf = 255;
+                this.bf = 0;
+                break;
+            }
+            case KeyEvent.VK_9:{ //Branco
+                this.rf = 255;
+                this.gf = 255;
+                this.bf = 255;
+                break;
+            }
+            case KeyEvent.VK_0:{ //Preto
+                this.rf = 0;
+                this.gf = 0;
+                this.bf = 0;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD1:{ //Vermelho
+                this.r = 255;
+                this.g = 0;
+                this.b = 0;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD2:{ //Verde
+                this.r = 0;
+                this.g = 255;
+                this.b = 0;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD3:{ //Azul
+                this.r = 0;
+                this.g = 0;
+                this.b = 255;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD4:{ //Amarelo
+                this.r = 255;
+                this.g = 255;
+                this.b = 0;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD9:{ //Branco
+                this.r = 255;
+                this.g = 255;
+                this.b = 255;
+                break;
+            }
+            case KeyEvent.VK_NUMPAD0:{ //Preto
+                this.r = 0;
+                this.g = 0;
+                this.b = 0;
+                break;
+            }
+        }
     }
 
     public void print () {

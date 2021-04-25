@@ -3,10 +3,10 @@ package figures;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Rect extends Figure {
+public class RoundRect extends Figure{
     int rf, gf, bf;
 
-    public Rect (int x, int y, int w, int h, int r, int g, int b, int rf, int gf, int bf) {
+    public RoundRect (int x, int y, int w, int h, int r, int g, int b, int rf, int gf, int bf) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -126,8 +126,9 @@ public class Rect extends Figure {
     public void paint (Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new Color(this.rf, this.gf, this.bf));
-        g2d.fillRect(this.x, this.y, this.w, this.h);
+        g2d.fillRoundRect(this.x, this.y, this.w, this.h, 50, 20);
         g2d.setColor(new Color(this.r, this.g, this.b));
-        g2d.drawRect(this.x,this.y, this.w,this.h);
+        g2d.drawRoundRect(this.x,this.y, this.w,this.h, 50, 20);
     }
 }
+
