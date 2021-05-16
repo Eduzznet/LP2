@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,9 +31,25 @@ class ListFrame extends JFrame {
 
 
     ListFrame () {
+        try{
+            FileInputStream f = new FileInputStream ("proj.bin");
+            ObjectInputStream o = new ObjectInputStream(f);
+            this.figs = (ArrayList<Figure>) o.readObject();
+            o.close();
+            } catch (Exception x){
+                System.out.println("ERRO!");
+            }
         this.addWindowListener (
             new WindowAdapter() {
                 public void windowClosing (WindowEvent e) {
+                    try{
+                        FileOutputStream f = new FileOutputStream("proj.bin");
+                        ObjectOutputStream o = new ObjectOutputStream(f);
+                        o.writeObject(figs);
+                        o.flush();
+                        o.close();
+                    } catch (Exception x){
+                    }
                     System.exit(0);
                 }
             }
@@ -95,7 +113,7 @@ class ListFrame extends JFrame {
         this.addMouseListener (
             new MouseAdapter()
             {
-                public void mouseClicked(MouseEvent evt)
+                public void mousePressed(MouseEvent evt)
                 {
                     mouseX = evt.getX();
                     mouseY = evt.getY();
@@ -116,7 +134,7 @@ class ListFrame extends JFrame {
                                 repaint();
                             }
                         }
-                        else if ((mouseX >= fig.x && mouseX <= (fig.w+fig.x)) && (mouseY >= fig.y && mouseY <= (fig.y+fig.h)))
+                        else if (fig.clicked(mouseX, mouseY))
                         {
                             focus = fig;
                             figs.remove(fig);
