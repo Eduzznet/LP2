@@ -21,6 +21,11 @@ public class Texto extends Figure {
         this.b = b;
     }
 
+    public void criaFoco (Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawRect(this.x-3, this.y-this.h, this.w+5, this.h+5);  
+    }
+
     public void keyPressed(KeyEvent evt){
         switch (evt.getKeyCode()){
             case KeyEvent.VK_UP:{
@@ -86,6 +91,10 @@ public class Texto extends Figure {
     public void print () {
         System.out.format("Texto de tamanho (%d) na posicao (%d,%d).\n",
             this.t, this.x, this.y);
+    }
+
+    public boolean clicked (int x, int y) {
+        return (((x >= this.x && x <= (this.w+this.x)) && y <= this.y && y >= (this.y-this.h)));
     }
 
     public void paint (Graphics g) {
