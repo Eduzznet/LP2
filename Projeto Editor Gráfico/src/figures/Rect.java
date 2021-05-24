@@ -3,7 +3,6 @@ package figures;
 import java.awt.*;
 
 public class Rect extends Figure {
-    int rf, gf, bf;
 
     public Rect (int x, int y, int w, int h, int r, int g, int b, int rf, int gf, int bf) {
         this.x = x;

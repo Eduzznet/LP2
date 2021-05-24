@@ -103,12 +103,10 @@ public class Window extends JPanel {
                         focus.keyPressed(evt);
                         repaint();
                     } 
-                    if(focus.getClass().equals(Texto.class)==false){
-                        if (evt.getKeyCode() == KeyEvent.VK_1 ||evt.getKeyCode() == KeyEvent.VK_2 || evt.getKeyCode() == KeyEvent.VK_3 || evt.getKeyCode() == KeyEvent.VK_4 || evt.getKeyCode() == KeyEvent.VK_9 || evt.getKeyCode() == KeyEvent.VK_0 ){
-                            focus.keyPressed(evt);
-                            repaint();
+                    if (evt.getKeyCode() == KeyEvent.VK_1 ||evt.getKeyCode() == KeyEvent.VK_2 || evt.getKeyCode() == KeyEvent.VK_3 || evt.getKeyCode() == KeyEvent.VK_4 || evt.getKeyCode() == KeyEvent.VK_9 || evt.getKeyCode() == KeyEvent.VK_0 ){
+                        focus.keyPressed(evt);
+                        repaint();
                         }
-                    }
                     if (evt.getKeyCode() == KeyEvent.VK_NUMPAD1 ||evt.getKeyCode() == KeyEvent.VK_NUMPAD2 || evt.getKeyCode() == KeyEvent.VK_NUMPAD3 || evt.getKeyCode() == KeyEvent.VK_NUMPAD4 || evt.getKeyCode() == KeyEvent.VK_NUMPAD9 || evt.getKeyCode() == KeyEvent.VK_NUMPAD0 ){
                         focus.keyPressed(evt);
                         repaint();
