@@ -6,10 +6,9 @@ import ivisible.IVisible;
 
 public abstract class Figure implements IVisible, Serializable{
     public int x, y;
-    public int w, h;
-    int r,g,b;
-    int rf,gf,bf;
-    public abstract void paint (Graphics g);
+    protected int w, h;
+    protected int r,g,b;
+    protected int rf,gf,bf;
 
     public void criaFoco (Graphics g){
         Graphics2D g2d = (Graphics2D) g;

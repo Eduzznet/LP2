@@ -4,9 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Texto extends Figure {
-    String texto;
-    String fonte;
-    int style;
+    private String texto;
+    private String fonte;
+    private int style;
     public int t;
 
     public Texto (String texto, String fonte, int style, int x, int y, int t, int w, int h, int r, int g, int b) {
@@ -47,7 +47,6 @@ public class Texto extends Figure {
                     this.t-=1;
                 }
                 break;
-        
             }
             case KeyEvent.VK_NUMPAD1:{ //Vermelho
                 this.r = 255;
@@ -85,6 +84,20 @@ public class Texto extends Figure {
                 this.b = 0;
                 break;
             }
+            case KeyEvent.VK_BACK_SPACE:{
+                StringBuffer sb = new StringBuffer (this.texto);
+                if(sb.length()>0){
+                    sb.deleteCharAt(sb.length()-1);
+                    this.texto = sb.toString();
+                }
+                break;
+            } 
+            default:{
+                if (! (evt.isActionKey() || evt.isControlDown())){    
+                    this.texto+=evt.getKeyChar();
+                }
+                break;
+            }
         }
     }
 
@@ -97,7 +110,7 @@ public class Texto extends Figure {
         return (((x >= this.x && x <= (this.w+this.x)) && y <= this.y && y >= (this.y-this.h)));
     }
 
-    public void paint (Graphics g) {
+    public void paint (Graphics g, boolean focado) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font(fonte, style, t));
         g2d.setPaint(new Color(this.r, this.g, this.b));

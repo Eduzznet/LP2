@@ -1,26 +1,23 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-
 import figures.*;
 
 public class Window extends JPanel {
     private static final long serialVersionUID = 1L;
-    ArrayList<Figure> figs = new ArrayList<Figure>();
-    Random rand = new Random();
-    Figure focus;
-    int mouseX;
-    int mouseY;
-    int mX;
-    int mY;
-    Texto tutorial = new Texto("R-Retangulo   E-Elipse   T-Texto(Escreva no console)   Y-Retangulo Arredondado", "Calibri", 0, 10, 435, 13, 0, 0, 255, 0, 0);
-    Texto tutorial2 = new Texto("1-Vermlho   2-Verde   3-Azul   4-Amarelo   9-Branco   0-Preto   (Para controno use o NUMPAD)", "Calibri", 0, 10, 450, 13, 0, 0, 255, 0, 0);
-    Texto tutorial3 = new Texto("Setinhas para Redimensionar(Cima/Direita aumentam e Baixo/Esquerda diminuem   DEL-Deletar", "Calibri", 0, 10, 465, 13, 0, 0, 255, 0, 0);
+    private ArrayList<Figure> figs = new ArrayList<Figure>();
+    private ArrayList<Button> botoes = new ArrayList<Button>();
+    private Figure focus;
+    private Button focusB;
+    private int mouseX;
+    private int mouseY;
+    private int mX;
+    private int mY;
+    private Texto tutorial = new Texto("ctrl+R: Retangulo   ctrl+E: Elipse   ctrl+Y: Retangulo Arredondado   ctrl+U: Triangulo Equilatero   ctrl+T: Texto(Teclado)", "Calibri", 0, 10, 435, 13, 0, 0, 255, 0, 0);
+    private Texto tutorial2 = new Texto("1-Vermelho   2-Verde   3-Azul   4-Amarelo   9-Branco   0-Preto   (Para controno ou Texto use o NUMPAD)", "Calibri", 0, 10, 450, 13, 0, 0, 255, 0, 0);
+    private Texto tutorial3 = new Texto("Setinhas para Redimensionar(Cima/Direita aumentam e Baixo/Esquerda diminuem)   DEL-Deletar   TAB-Foco   F4-Salvar", "Calibri", 0, 10, 465, 13, 0, 0, 255, 0, 0);
     
     Window(){
     
@@ -37,21 +34,12 @@ public class Window extends JPanel {
         } catch (Exception x){
             System.out.println("ERRO!");
         }
-    /*this.addWindowListener (
-        new WindowAdapter() {
-            public void windowClosing (WindowEvent e) {
-                try{
-                    FileOutputStream f = new FileOutputStream("proj.bin");
-                    ObjectOutputStream o = new ObjectOutputStream(f);
-                    o.writeObject(figs);
-                    o.flush();
-                    o.close();
-                } catch (Exception x){
-                }
-                System.exit(0);
-            }
-        }
-    );*/
+
+    botoes.add(new Button(1, 5, 5, 30, 30, new Rect(10, 9, 18, 20, 255, 0, 0, 255, 0, 0)));
+    botoes.add(new Button(2, 5, 40, 30, 30, new Ellipse(9, 45, 20, 20, 255, 0, 0, 255, 0, 0)));
+    botoes.add(new Button(3, 5, 75, 30, 30, new RoundRect(8, 78, 22, 22, 255, 0, 0, 255, 0, 0)));
+    botoes.add(new Button(4, 5, 110, 30, 30, new Triang(8, 113, 22, 22, 255, 0, 0, 255, 0, 0)));
+    botoes.add(new Button(5, 5, 145, 30, 30, new Texto("T", "Times New Roman", 1, 12, 168, 25, 0, 0, 255, 0, 0)));
     this.addKeyListener (
         new KeyAdapter(){
             public void keyPressed (KeyEvent evt) {
@@ -65,25 +53,28 @@ public class Window extends JPanel {
                     int rf = 0;
                     int gf = 0;
                     int bf = 0;
-                if (evt.getKeyChar() == 'r') {
+                if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_R) {
                     figs.add(new Rect(x,y, w,h, r,g,b, rf,gf,bf));
                     focus = figs.get(figs.size()-1);
                     repaint();
                 }
-                if (evt.getKeyChar() == 'e') {
+                if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_E) {
                     figs.add(new Ellipse(x,y, w,h, r,g,b, rf,gf,bf));
                     focus = figs.get(figs.size()-1);
                     repaint();
                 }
-                if (evt.getKeyChar() == 'y'){
+                if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Y){
                     figs.add(new RoundRect(x, y, w, h, r, g, b, rf, gf, bf));
                     focus = figs.get(figs.size()-1);
                     repaint();
                 }
-                if (evt.getKeyChar() == 't') {
-                    Scanner p = new Scanner (System.in);
-                    String cadeia = p.nextLine(); 
-                    figs.add(new Texto(cadeia, "Arial", 1, x, y, 20, 0, 0, r, g, b));
+                if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_T) {
+                    figs.add(new Texto("", "Arial", 1, x, y, 20, 0, 0, r, g, b));
+                    focus = figs.get(figs.size()-1);
+                    repaint();
+                }
+                if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_U) {
+                    figs.add(new Triang(x, y, w, h, r, g, b, rf, gf, bf));
                     focus = figs.get(figs.size()-1);
                     repaint();
                 }
@@ -98,23 +89,31 @@ public class Window extends JPanel {
                         }
                     }
                 }
+                if (evt.getKeyCode() == KeyEvent.VK_F4){
+                    try{
+                        FileOutputStream f = new FileOutputStream("proj.bin");
+                        ObjectOutputStream o = new ObjectOutputStream(f);
+                        o.writeObject(figs);
+                        o.flush();
+                        o.close();
+                    } catch (Exception xException){
+                    }
+                }
                 if (focus!=null){
-                    if (evt.getKeyCode() == KeyEvent.VK_RIGHT ||evt.getKeyCode() == KeyEvent.VK_LEFT || evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN ){
-                        focus.keyPressed(evt);
-                        repaint();
-                    } 
-                    if (evt.getKeyCode() == KeyEvent.VK_1 ||evt.getKeyCode() == KeyEvent.VK_2 || evt.getKeyCode() == KeyEvent.VK_3 || evt.getKeyCode() == KeyEvent.VK_4 || evt.getKeyCode() == KeyEvent.VK_9 || evt.getKeyCode() == KeyEvent.VK_0 ){
-                        focus.keyPressed(evt);
-                        repaint();
-                        }
-                    if (evt.getKeyCode() == KeyEvent.VK_NUMPAD1 ||evt.getKeyCode() == KeyEvent.VK_NUMPAD2 || evt.getKeyCode() == KeyEvent.VK_NUMPAD3 || evt.getKeyCode() == KeyEvent.VK_NUMPAD4 || evt.getKeyCode() == KeyEvent.VK_NUMPAD9 || evt.getKeyCode() == KeyEvent.VK_NUMPAD0 ){
+                    if (evt.getKeyCode() >= 32 && evt.getKeyCode() < 127 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
                         focus.keyPressed(evt);
                         repaint();
                     }
-                    if (evt.getKeyCode() == KeyEvent.VK_DELETE){
-                        figs.remove(focus);
-                        focus=null;
-                        repaint();
+                    else{
+                        if (evt.getKeyCode() == KeyEvent.VK_DELETE){
+                            figs.remove(focus);
+                            focus=null;
+                            repaint();
+                        }
+                        else if (! (evt.isActionKey() || evt.isControlDown() || evt.isShiftDown())){ 
+                            focus.keyPressed(evt);
+                            repaint();
+                        }
                     }
                 }
 
@@ -145,6 +144,50 @@ public class Window extends JPanel {
                         repaint();
                     }
                 }
+                
+                if(focusB!=null && (mouseX>35 || mouseY>170)){
+                    if (focusB.idx==1){
+                        figs.add(new Rect(mouseX,mouseY, 50,50, 255,255,255, 0,0,0));
+                        focus = figs.get(figs.size()-1);
+                        repaint();
+                    }
+                    else if (focusB.idx==2){
+                        figs.add(new Ellipse(mouseX,mouseY, 50,50, 255,255,255, 0,0,0));
+                        focus = figs.get(figs.size()-1);
+                        repaint();
+                    }
+                    else if (focusB.idx==3){
+                        figs.add(new RoundRect(mouseX,mouseY, 50,50, 255,255,255, 0,0,0));
+                        focus = figs.get(figs.size()-1);
+                        repaint();
+                    }
+                    else if (focusB.idx==4){
+                        figs.add(new Triang(mouseX,mouseY, 50,50, 255,255,255, 0,0,0));
+                        focus = figs.get(figs.size()-1);
+                        repaint();
+                    }
+                    else if (focusB.idx==5){
+                        figs.add(new Texto("", "Arial", 1, mouseX, mouseY, 20, 0, 0, 255, 255, 255));
+                        focus = figs.get(figs.size()-1);
+                        repaint();
+                    }
+                    focusB = null;
+                    repaint();
+                }
+                for (Button botao:botoes)
+                {
+                    if (botao.clicked(mouseX, mouseY))
+                    {
+                        focusB = botao;
+                        focusB.foco = true;
+                        repaint();
+                        break;
+                    }
+                    else{
+                        focusB = null;
+                        repaint();
+                    }
+                }
             }
         }
     );
@@ -167,22 +210,24 @@ public class Window extends JPanel {
             }
         }
     );
-
 }   
 public void paint (Graphics g) {
     super.paint(g);
     Graphics2D g2d = (Graphics2D) g;
     g2d.setColor(Color.BLACK);
     g2d.fillRect(0, 0, 2000, 1500);
-    tutorial.paint(g);
-    tutorial2.paint(g);
-    tutorial3.paint(g);
+    tutorial.paint(g, true);
+    tutorial2.paint(g, true);
+    tutorial3.paint(g, true);
     for (Figure fig: figs) {
-        fig.paint(g);
+        fig.paint(g,true);
     }
     if (focus!=null){
         g2d.setColor(Color.RED);
         focus.criaFoco(g);
     }
+    for (Button botao: botoes){
+        botao.paint(g, botao==focusB);
+    }       
 }
 }
