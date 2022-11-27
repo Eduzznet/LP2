@@ -26,13 +26,13 @@ public abstract class Figure implements IVisible, Serializable{ // RESPOSTA: (no
                 break;
             }
             case KeyEvent.VK_DOWN:{
-                if(this.h>=1){
+                if(this.h>=1){ // RESPOSTA: (nome=h, propriedade=endereço, tempo=execução)
                     this.h-=3; // RESPOSTA: (nome= -, propriedade=semantica, tempo=compilação)
                 }
                 break;
             }
             case KeyEvent.VK_RIGHT:{
-                this.w+=5;
+                this.w+=5; // RESPOSTA: (nome=w, propriedade=endereço, tempo=execução)
                 break;
             }
             case KeyEvent.VK_LEFT:{
