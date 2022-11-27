@@ -9,8 +9,8 @@ public class Window extends JPanel {
     private static final long serialVersionUID = 1L; // RESPOSTA: (nome=serialVersionUID, propriedade=valor, tempo=pré-processamento)
     private ArrayList<Figure> figs = new ArrayList<Figure>();
     private ArrayList<Button> botoes = new ArrayList<Button>();
-    private Figure focus;
-    private Button focusB;
+    private Figure focus; // RESPOSTA: (nome=Figure, propriedade=endereço, tempo=carregamento)
+    private Button focusB; // RESPOSTA: (nome=Button, propriedade=endereço, tempo=carregamento)
     private int mouseX;
     private int mouseY;
     private int mX; // RESPOSTA: (nome=mX, propriedade=valor, tempo=implementação)
