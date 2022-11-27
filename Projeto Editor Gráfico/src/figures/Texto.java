@@ -113,8 +113,8 @@ public class Texto extends Figure {
     public void paint (Graphics g, boolean focado) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font(fonte, style, t));
-        g2d.setPaint(new Color(this.r, this.g, this.b));
-        g2d.drawString(this.texto, this.x, this.y);
+        g2d.setPaint(new Color(this.r, this.g, this.b)); // RESPOSTA: (nome=setPaint, propriedade=implementação, tempo=ligação)
+        g2d.drawString(this.texto, this.x, this.y); // RESPOSTA: (nome=drawString, propriedade=implementação, tempo=ligação)
         FontMetrics metrics = g.getFontMetrics();
         this.h= metrics.getHeight();
         this.w = metrics.stringWidth(texto);
