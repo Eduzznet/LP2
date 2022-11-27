@@ -26,7 +26,7 @@ public class Window extends JPanel {
     setFocusTraversalKeysEnabled(false);
     
     
-    try{
+    try{ // RESPOSTA: (nome=try, propriedade=escopo, tempo=especificação)
         FileInputStream f = new FileInputStream ("proj.bin");
         ObjectInputStream o = new ObjectInputStream(f);
         this.figs = (ArrayList<Figure>) o.readObject();
