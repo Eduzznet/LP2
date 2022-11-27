@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import figures.*;
 
 public class Window extends JPanel {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // RESPOSTA: (nome=serialVersionUID, propriedade=valor, tempo=pré-processamento)
     private ArrayList<Figure> figs = new ArrayList<Figure>();
     private ArrayList<Button> botoes = new ArrayList<Button>();
     private Figure focus;
