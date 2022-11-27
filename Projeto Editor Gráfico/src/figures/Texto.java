@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Texto extends Figure {
-    private String texto;
+    private String texto; // RESPOSTA: (nome=texto, propriedade=valor, tempo=implementação)
     private String fonte;
     private int style;
     public int t;
