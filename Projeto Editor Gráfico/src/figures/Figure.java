@@ -22,12 +22,12 @@ public abstract class Figure implements IVisible, Serializable{ // RESPOSTA: (no
     public void keyPressed(KeyEvent evt){
         switch (evt.getKeyCode()){
             case KeyEvent.VK_UP:{
-                this.h+=5;
+                this.h+=5; // RESPOSTA: (nome= +, propriedade=semantica, tempo=compilação)
                 break;
             }
             case KeyEvent.VK_DOWN:{
                 if(this.h>=1){
-                    this.h-=3;
+                    this.h-=3; // RESPOSTA: (nome= -, propriedade=semantica, tempo=compilação)
                 }
                 break;
             }
