@@ -6,7 +6,7 @@ public class Button implements IVisible{
     public int idx;
     private int x,y,w,h;
     private Figure fig;
-    protected boolean foco;
+    protected boolean foco; // RESPOSTA: (nome=foco, propriedade=tipo, tempo=especificação)
     public Button (int idx, int x, int y, int w ,int h, Figure fig) {
         this.idx = idx;
         this.x = x;
