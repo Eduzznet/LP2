@@ -13,7 +13,7 @@ public class Window extends JPanel {
     private Button focusB;
     private int mouseX;
     private int mouseY;
-    private int mX;
+    private int mX; // RESPOSTA: (nome=mX, propriedade=valor, tempo=implementação)
     private int mY;
     private Texto tutorial = new Texto("ctrl+R: Retangulo   ctrl+E: Elipse   ctrl+Y: Retangulo Arredondado   ctrl+U: Triangulo Equilatero   ctrl+T: Texto(Teclado)", "Calibri", 0, 10, 435, 13, 0, 0, 255, 0, 0);
     private Texto tutorial2 = new Texto("1-Vermelho   2-Verde   3-Azul   4-Amarelo   9-Branco   0-Preto   (Para controno ou Texto use o NUMPAD)", "Calibri", 0, 10, 450, 13, 0, 0, 255, 0, 0);
