@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.io.Serializable;
 import ivisible.IVisible;
 
-public abstract class Figure implements IVisible, Serializable{
+public abstract class Figure implements IVisible, Serializable{ // RESPOSTA: (nome=Serializable, propriedade=valor, tempo=pré-processamento)
     public int x, y;
     protected int w, h;
     protected int r,g,b;
